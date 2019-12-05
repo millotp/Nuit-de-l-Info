@@ -37,7 +37,7 @@ public class World {
 		// GL11.glColor3d(0, 0, 0);
 		GL11.glTranslated(width / 2, height / 2, 0);
 		GL11.glRotated(angle, 0, 0, 1);
-		Renderer.ellipse(0, 0, width, width, 0.5);
+		Renderer.ellipse(0, 0, width, width, 0.41);
 		this.ceilTexture.unbind();
 
 		GL11.glPopMatrix();
@@ -47,7 +47,7 @@ public class World {
 		this.bkgTexture.bind();
 		// GL11.glColor3d(0, 0, 0);
 		GL11.glTranslated(width / 2, height / 2, 0);
-		Renderer.ellipse(0, 0, 7*width/8, 7*width/8, .25);
+		Renderer.ellipse(0, 0, 7*width/8, 7*width/8, 0.43);
 		this.bkgTexture.unbind();
 
 		GL11.glPopMatrix();
