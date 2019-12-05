@@ -98,7 +98,13 @@ public class Main {
 		// frameRate = smooth(1000000000f / this.elapsedTime, 0.9, frameRate);
 		float timeMultiplier = this.elapsedTime / (1000000000f / 60f);
 		this.handleInputs();
-
+		
+		GL11.glColor3d(1, 0, 0);
+		GL11.glBegin(GL11.GL_TRIANGLES);
+		GL11.glVertex2d(200, 200);
+		GL11.glVertex2d(300, 300);
+		GL11.glVertex2d(100, 300);
+		GL11.glEnd();
 	}
 
 	private void handleInputs() {
