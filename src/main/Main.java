@@ -5,6 +5,7 @@ import static util.Global.mousePressed;
 import static util.Global.mouseX;
 import static util.Global.mouseY;
 import static util.Global.width;
+import static util.Global.endRequest;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -17,6 +18,7 @@ import game.Ball;
 import gui.GUI;
 import gui.Game;
 import menu.Menu;
+import menu.Score;
 
 public class Main {
 	public static Main theMain = new Main();
@@ -92,7 +94,7 @@ public class Main {
 				Display.update();
 				if (Display.wasResized())
 					this.resize(Display.getWidth(), Display.getHeight());
-			} while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE));
+			} while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && !endRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -145,6 +147,9 @@ public class Main {
 			break;
 		case "MENU":
 			currentGUI = new Menu();
+			break;
+		case "SCORE":
+			currentGUI = new Score();
 			break;
 		}
 	}
