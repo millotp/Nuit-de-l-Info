@@ -16,8 +16,8 @@ public class Ball {
 		this.radius = radius;
 	}
 	
-	public void draw() {
-		Renderer.ellipse(this.pos.x, this.pos.y, 2*this.radius, 2*this.radius);
+	public void render() {
+		Renderer.ellipse(this.pos.x, this.pos.y, 2*this.radius, 2*this.radius, 0.5);
 	}
 	
 	private void bords() {
@@ -32,14 +32,10 @@ public class Ball {
 		}
 	}
 	
-	private void update() {
+	public void update() {
 		this.pos.add(this.speed);
 		this.bords();
 	}
 	
-	public void wesh() {
-		this.update();
-		this.draw();
-	}
 
 }

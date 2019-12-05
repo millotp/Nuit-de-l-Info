@@ -1,7 +1,7 @@
 package util;
 
 import java.awt.Font;
-
+import static util.Global.map;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
@@ -35,14 +35,17 @@ public class Renderer {
 		}
 	}
 
-	public static void ellipse(double x, double y, double w, double h) {
+	public static void ellipse(double x, double y, double w, double h, double factor) {
 		GL11.glBegin(GL11.GL_POLYGON);
 		for (int i = 0; i < 500; i++) {
 			double angle = Math.PI * 2 * (i / 500.0);
+			GL11.glTexCoord2d(map(Math.cos(angle), -1, 1, .5 - factor, .5 + factor),map(Math.sin(angle), -1, 1, .5 - factor, .5 + factor));
 			GL11.glVertex2d(x + w / 2 * Math.cos(angle), y + h / 2 * Math.sin(angle));
+			
 		}
 		GL11.glEnd();
 	}
+	
 
 	public static void write(TrueTypeFont f, String word, double x, double y, int col) {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
