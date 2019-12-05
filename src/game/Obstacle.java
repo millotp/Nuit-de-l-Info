@@ -2,9 +2,11 @@ package game;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import static util.Global.map;
 
 import org.lwjgl.opengl.GL11;
 
+import util.Renderer;
 import util.VecPolar;
 
 public class Obstacle {
@@ -16,14 +18,25 @@ public class Obstacle {
 		this.size = size;
 	}
 
-	public void render() {
-		GL11.glBegin(GL11.GL_POLYGON);
-		GL11.glVertex2d(pos.r * cos(pos.a), pos.r * sin(pos.a));
-		GL11.glVertex2d((pos.r + size.r) * cos(pos.a), (pos.r + size.r) * sin(pos.a));
-
+	public void update(double speed) {
+		pos.a += speed * Math.PI / 180;
 	}
 
-	public void update() {
+	public void render() {
+		GL11.glColor3d(1, 0, 0);
+		Renderer.setMode(GL11.GL_FILL);
+		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
+		for (int i = 0; i < 20; i++) {
+			double angle = map(i, 0, 20, pos.a, pos.a + size.a);
+			GL11.glVertex2d(pos.r * cos(angle), pos.r * sin(angle));
+			GL11.glVertex2d((pos.r + size.r) * cos(angle), (pos.r + size.r) * sin(angle));
+		}
+		GL11.glVertex2d(pos.r * cos(pos.a + size.a), pos.r * sin(pos.a + size.a));
+		GL11.glVertex2d((pos.r + size.r) * cos(pos.a + size.a), (pos.r + size.r) * sin(pos.a + size.a));
+		GL11.glEnd();
+	}
 
+	public boolean collideWith(Ball ball) {
+		return false;
 	}
 }
