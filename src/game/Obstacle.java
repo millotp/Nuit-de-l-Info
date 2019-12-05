@@ -1,6 +1,6 @@
 package game;
 
-import static java.lang.Math.cos;
+import static java.lang.Math.*;
 import static java.lang.Math.sin;
 import static util.Global.map;
 
@@ -37,6 +37,11 @@ public class Obstacle {
 	}
 
 	public boolean collideWith(Ball ball) {
-		return false;
+		if(ball.pos.r - ball.radius > pos.r + size.r || ball.pos.r + ball.radius < pos.r)
+			return false;
+		double half_angle = atan(ball.radius / ball.pos.r);
+		if(ball.pos.a + half_angle < pos.a || ball.pos.a - half_angle > pos.a + size.a)
+			return false;
+		return true;
 	}
 }
