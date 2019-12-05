@@ -1,5 +1,6 @@
 package main;
 
+import static util.Global.endRequest;
 import static util.Global.height;
 import static util.Global.mousePressed;
 import static util.Global.mouseX;
@@ -12,11 +13,13 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
 
 import game.Ball;
 import gui.GUI;
 import gui.Game;
 import menu.Menu;
+import menu.Score;
 
 public class Main {
 	public static Main theMain = new Main();
@@ -29,7 +32,7 @@ public class Main {
 
 	private void init() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(400, 800));
-		Display.create();
+		Display.create(new PixelFormat(8, 0, 0, 8));
 		Display.setResizable(true);
 		Display.setVSyncEnabled(true);
 		Keyboard.create();
@@ -92,7 +95,7 @@ public class Main {
 				Display.update();
 				if (Display.wasResized())
 					this.resize(Display.getWidth(), Display.getHeight());
-			} while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE));
+			} while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && !endRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -130,9 +133,9 @@ public class Main {
 		while (Keyboard.next()) {
 			boolean pressed = Keyboard.getEventKeyState();
 			if (pressed)
-				this.currentGUI.onKeyPressed(Keyboard.getEventCharacter());
+				this.currentGUI.onKeyPressed(Keyboard.getEventKey());
 			else
-				this.currentGUI.onKeyReleased(Keyboard.getEventCharacter());
+				this.currentGUI.onKeyReleased(Keyboard.getEventKey());
 		}
 	}
 
@@ -145,6 +148,9 @@ public class Main {
 			break;
 		case "MENU":
 			currentGUI = new Menu();
+			break;
+		case "SCORE":
+			currentGUI = new Score();
 			break;
 		}
 	}

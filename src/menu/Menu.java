@@ -2,6 +2,7 @@ package menu;
 
 import static util.Global.width;
 import static util.Global.height;
+import static util.Global.endRequest;
 
 import static util.Renderer.fontMenu;
 import static util.Renderer.writeCentered;
@@ -13,7 +14,7 @@ public class Menu extends GUI {
 	private int widthButton = 120;
 	private int  heightButton = 30;
 	private int buttonGap= 40;
-	private int lastScore = 60;
+	private int lastScore = -1;
 	
 	public Menu(){
 		super();
@@ -41,7 +42,7 @@ public class Menu extends GUI {
 		super.onClick();
 		switch(this.pressedButton){
 			case 2:
-				System.exit(1);
+				endRequest = true;
 				break;
 		}
 			
