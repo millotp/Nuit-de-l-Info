@@ -36,7 +36,7 @@ public abstract class GUI {
 		return b;
 	}
 
-	public Clickable getClickble(int id) {
+	public Clickable getClickable(int id) {
 		return this.buttons.get(id);
 	}
 

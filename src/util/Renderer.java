@@ -9,6 +9,7 @@ import org.newdawn.slick.opengl.TextureImpl;
 
 public class Renderer {
 	public static TrueTypeFont font16 = new TrueTypeFont(new Font("Arial", Font.BOLD, 16), true);
+	public static TrueTypeFont fontMenu = new TrueTypeFont(new Font("Cambrian", Font.BOLD, 20), true);
 
 	public static void setColor(int c) {
 		if (c == 0)
