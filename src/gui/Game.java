@@ -6,9 +6,11 @@ import static util.Global.width;
 import static util.Renderer.font16;
 import static util.Renderer.writeCentered;
 
+
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
+
 
 import game.Ball;
 import game.World;
@@ -17,6 +19,7 @@ public class Game extends GUI
 {
 	
 	private Ball balle;
+
 	private World moonWorld;
 	private World xmasWorld;
 	private World ringWorld;
@@ -25,6 +28,7 @@ public class Game extends GUI
 	
 	private World currWorld;
 	private int currWorldIndex;
+
 	
 	private Button btn1;
 	private Button btn2;
@@ -34,6 +38,7 @@ public class Game extends GUI
 	public Game()
 	{
 		super();
+
 		balle = new Ball(width/2, height/2 - width/4, 25);
 		moonWorld = new World(2, "meta/moon_ground.jpg", "meta/stars.jpg");
 		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg");
@@ -45,6 +50,7 @@ public class Game extends GUI
 		
 		currWorld = this.worlds.get(0);
 		currWorldIndex = 0;
+
 		
 		btn1 = new Button(1, 10, height - 30, 100, 30, "Monde 1", null);
 		btn2 = new Button(2, 10 + 100, height - 30, 100, 30, "Monde 2", null);

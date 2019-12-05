@@ -1,11 +1,11 @@
 package main;
 
+import static util.Global.endRequest;
 import static util.Global.height;
 import static util.Global.mousePressed;
 import static util.Global.mouseX;
 import static util.Global.mouseY;
 import static util.Global.width;
-import static util.Global.endRequest;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
