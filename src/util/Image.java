@@ -56,6 +56,7 @@ public class Image {
 				data[(i + j * wid) * 4] = (byte) (c >> 16 & 0xFF);
 				data[(i + j * wid) * 4 + 1] = (byte) (c >> 8 & 0xFF);
 				data[(i + j * wid) * 4 + 2] = (byte) (c & 0xFF);
+				data[(i + j * wid) * 4 + 3] = (byte) 255;
 			}
 		changed = true;
 	}
@@ -66,6 +67,8 @@ public class Image {
 				data[(i + j * wid) * 4] = newData[(wid - 1 - i + j * wid) * 4 + 2];
 				data[(i + j * wid) * 4 + 1] = newData[(wid - 1 - i + j * wid) * 4 + 1];
 				data[(i + j * wid) * 4 + 2] = newData[(wid - 1 - i + j * wid) * 4];
+				data[(i + j * wid) * 4 + 3] = (byte) 255;
+				
 			}
 		}
 		changed = true;
@@ -102,11 +105,23 @@ public class Image {
 		GL11.glVertex2d(x, y);
 		GL11.glTexCoord2d(1, 0);
 		GL11.glVertex2d(x + w, y);
-		GL11.glTexCoord2d(1, 1);
+		GL11.glTexCoord2d(1, 1); 
 		GL11.glVertex2d(x + w, y + h);
 		GL11.glTexCoord2d(0, 1);
 		GL11.glVertex2d(x, y + h);
 		GL11.glEnd();
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+	}
+	
+	public void bind() {
+		if (texture == -1 || changed)
+			createTexture();
+		setColor(0xFFFFFFFF);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
+	}
+	
+	public void unbind() {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
@@ -130,7 +145,7 @@ public class Image {
 		buffer.flip();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, 4, wid, hei, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, 4, wid, hei, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
