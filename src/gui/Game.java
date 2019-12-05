@@ -15,9 +15,8 @@ import audio.SoundsManager;
 import game.Ball;
 import game.World;
 
-public class Game extends GUI
-{
-	
+public class Game extends GUI {
+
 	private Ball balle;
 
 	private World moonWorld;
@@ -58,29 +57,18 @@ public class Game extends GUI
 		btn1.setPressed(true);
 		btn2.setPressed(false);
 		btn3.setPressed(false);
-		
 	}
-	
+
 	@Override
 	public void update(double timeMultiplier) {
 		balle.update();
 		currWorld.update();
 	}
-	
-	
-	
+
 	@Override
-	public void render()
-	{
+	public void render() {
 		super.render();
-		
-		
-		
-		
-		
-		
-		writeCentered(font16, "Menu", width / 2, 10);
-		
+
 		currWorld.render();
 		
 		balle.render();
@@ -89,12 +77,11 @@ public class Game extends GUI
 		btn2.render();
 		btn3.render();
 	}
-	
+
 	@Override
-	public void onKeyPressed(int key)
-	{
+	public void onKeyPressed(int key) {
 		super.onKeyPressed(key);
-		if(key == 27)
+		if (key == 27)
 			endRequest = true;
 		
 		if (key == Keyboard.KEY_1) {

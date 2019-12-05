@@ -33,7 +33,7 @@ public class Main {
 
 
 	private void init() throws LWJGLException {
-		Display.setDisplayMode(new DisplayMode(400, 800));
+		Display.setDisplayMode(new DisplayMode(800, 800));
 		Display.create(new PixelFormat(8, 0, 0, 8));
 		Display.setResizable(true);
 		Display.setVSyncEnabled(true);
@@ -52,8 +52,8 @@ public class Main {
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 
 		this.resize(Display.getWidth(), Display.getHeight());
-		
-		this.changeGUI("MENU");
+
+		this.changeGUI("GAME");
 		this.lastTime = System.nanoTime();
 	}
 

@@ -40,20 +40,37 @@ public class Renderer {
 		GL11.glBegin(GL11.GL_POLYGON);
 		for (int i = 0; i < 500; i++) {
 			double angle = Math.PI * 2 * (i / 500.0);
-			GL11.glTexCoord2d(map(Math.cos(angle), -1, 1, .5 - factor, .5 + factor),map(Math.sin(angle), -1, 1, .5 - factor, .5 + factor));
+			GL11.glTexCoord2d(map(Math.cos(angle), -1, 1, .5 - factor, .5 + factor),
+					map(Math.sin(angle), -1, 1, .5 - factor, .5 + factor));
 			GL11.glVertex2d(x + w / 2 * Math.cos(angle), y + h / 2 * Math.sin(angle));
-			
+
 		}
 		GL11.glEnd();
 	}
-	
+
+	public static void arc(double x, double y, double r, double a_start, double a_end, double factor) {
+		if (a_start < a_end) {
+			for (double angle = a_start; angle < a_end; angle += 0.01) {
+				GL11.glTexCoord2d(map(Math.cos(angle), -1, 1, .5 - factor, .5 + factor),
+						map(Math.sin(angle), -1, 1, .5 - factor, .5 + factor));
+				GL11.glVertex2d(x + r * Math.cos(angle), y + r * Math.sin(angle));
+			}
+		} else {
+			for (double angle = a_start; angle > a_end; angle -= 0.01) {
+				GL11.glTexCoord2d(map(Math.cos(angle), -1, 1, .5 - factor, .5 + factor),
+						map(Math.sin(angle), -1, 1, .5 - factor, .5 + factor));
+				GL11.glVertex2d(x + r * Math.cos(angle), y + r * Math.sin(angle));
+			}
+		}
+
+	}
 
 	public static void write(TrueTypeFont f, String word, double x, double y, int col) {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		TextureImpl.bindNone();
 		Color.white.bind();
-		f.drawString((float)x, (float)y, word, new Color((col >> 16) & 0xFF, (col >> 8) & 0xFF, col & 0xFF));
+		f.drawString((float) x, (float) y, word, new Color((col >> 16) & 0xFF, (col >> 8) & 0xFF, col & 0xFF));
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
