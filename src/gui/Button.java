@@ -28,6 +28,7 @@ public class Button extends Clickable {
 		this.font = font16;
 	}
 
+	
 	public void render() {
 		setMode(GL11.GL_FILL);
 		setColor(this.pressed ? this.colorPressed : hovered ? this.colorHover : this.colorUnpressed);
