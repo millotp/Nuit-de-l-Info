@@ -13,8 +13,12 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import game.Ball;
+
 public class Main {
 	public static Main theMain = new Main();
+	
+	Ball ball = new Ball(200, 400, 25);
 
 	private boolean lastPressed;
 	private long currentTime, elapsedTime, lastTime;
@@ -100,11 +104,8 @@ public class Main {
 		this.handleInputs();
 		
 		GL11.glColor3d(1, 0, 0);
-		GL11.glBegin(GL11.GL_TRIANGLES);
-		GL11.glVertex2d(200, 200);
-		GL11.glVertex2d(300, 300);
-		GL11.glVertex2d(100, 300);
-		GL11.glEnd();
+		ball.wesh();
+		
 	}
 
 	private void handleInputs() {
