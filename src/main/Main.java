@@ -14,14 +14,17 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import game.Ball;
+import gui.GUI;
+import gui.Game;
 
 public class Main {
 	public static Main theMain = new Main();
-	
+
 	Ball ball = new Ball(200, 400, 25);
 
 	private boolean lastPressed;
 	private long currentTime, elapsedTime, lastTime;
+	private GUI currentGUI;
 
 	private void init() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(400, 800));
@@ -43,7 +46,8 @@ public class Main {
 		GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 
 		this.resize(Display.getWidth(), Display.getHeight());
-
+		
+		this.changeGUI("GAME");
 		this.lastTime = System.nanoTime();
 	}
 
@@ -100,12 +104,11 @@ public class Main {
 		this.elapsedTime = this.currentTime - this.lastTime;
 		this.lastTime = this.currentTime;
 		// frameRate = smooth(1000000000f / this.elapsedTime, 0.9, frameRate);
-		float timeMultiplier = this.elapsedTime / (1000000000f / 60f);
+		double timeMultiplier = this.elapsedTime / (1000000000f / 60f);
 		this.handleInputs();
-		
-		GL11.glColor3d(1, 0, 0);
-		ball.wesh();
-		
+
+		this.currentGUI.update(timeMultiplier);
+		this.currentGUI.render();
 	}
 
 	private void handleInputs() {
@@ -116,21 +119,29 @@ public class Main {
 		while (Mouse.next()) {
 			if (Mouse.getEventButton() >= 0) {
 				boolean pressed = Mouse.getEventButtonState();
-				if (pressed && !this.lastPressed) {
-					// click
-				}
-				if (!pressed && this.lastPressed) {
-					// release
-				}
+				if (pressed && !this.lastPressed)
+					this.currentGUI.onClick();
+				if (!pressed && this.lastPressed)
+					this.currentGUI.onUnClick();
 				this.lastPressed = pressed;
 			}
 		}
 		while (Keyboard.next()) {
 			boolean pressed = Keyboard.getEventKeyState();
-			/*
-			 * if (pressed) this.currentGUI.onKeyPressed(Keyboard.getEventCharacter()); else
-			 * this.currentGUI.onKeyReleased(Keyboard.getEventCharacter());
-			 */
+			if (pressed)
+				this.currentGUI.onKeyPressed(Keyboard.getEventCharacter());
+			else
+				this.currentGUI.onKeyReleased(Keyboard.getEventCharacter());
+		}
+	}
+
+	public void changeGUI(String name) {
+		if (this.currentGUI != null)
+			this.currentGUI.close();
+		switch (name) {
+		case "GAME":
+			currentGUI = new Game();
+			break;
 		}
 	}
 
