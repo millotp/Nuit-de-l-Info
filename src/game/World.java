@@ -17,12 +17,12 @@ public class World {
 	private double rotationSpeed;
 	private double angle;
 
-	public World(double rotationSpeed, String cheminTexture) {
+	public World(double rotationSpeed, String groundTexture, String bkgTxt) {
 		this.worldId = 0; // TODO
 		this.rotationSpeed = rotationSpeed;
 
-		this.bkgTexture = new Image("meta/stars.jpg");
-		this.ceilTexture = new Image(cheminTexture);
+		this.bkgTexture = new Image(bkgTxt);
+		this.ceilTexture = new Image(groundTexture);
 
 		this.angle = 0;
 	}
@@ -52,6 +52,7 @@ public class World {
 
 		GL11.glPopMatrix();
 
+		GL11.glPushMatrix();
 		
 		this.ceilTexture.bind();
 		// GL11.glColor3d(0, 0, 0);

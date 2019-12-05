@@ -12,6 +12,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
 
 import game.Ball;
 import gui.GUI;
@@ -29,7 +30,7 @@ public class Main {
 
 	private void init() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(400, 800));
-		Display.create();
+		Display.create(new PixelFormat(8, 0, 0, 8));
 		Display.setResizable(true);
 		Display.setVSyncEnabled(true);
 		Keyboard.create();
@@ -130,9 +131,9 @@ public class Main {
 		while (Keyboard.next()) {
 			boolean pressed = Keyboard.getEventKeyState();
 			if (pressed)
-				this.currentGUI.onKeyPressed(Keyboard.getEventCharacter());
+				this.currentGUI.onKeyPressed(Keyboard.getEventKey());
 			else
-				this.currentGUI.onKeyReleased(Keyboard.getEventCharacter());
+				this.currentGUI.onKeyReleased(Keyboard.getEventKey());
 		}
 	}
 
