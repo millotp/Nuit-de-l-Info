@@ -6,34 +6,76 @@ import static util.Global.width;
 import static util.Renderer.font16;
 import static util.Renderer.writeCentered;
 
+
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
+
+
 import game.Ball;
 import game.World;
 
 public class Game extends GUI {
 
 	private Ball balle;
-	private World world1;
 
-	public Game() {
+	private World moonWorld;
+	private World xmasWorld;
+	private World ringWorld;
+	
+	private ArrayList<World> worlds;
+	
+	private World currWorld;
+	private int currWorldIndex;
+
+	
+	private Button btn1;
+	private Button btn2;
+	private Button btn3;
+	
+	
+	public Game()
+	{
 		super();
-		balle = new Ball(width / 2, height / 2, 25);
-		world1 = new World(2, "meta/sky.jpg");
 
+		balle = new Ball(width/2, height/2 - width/4, 25);
+		moonWorld = new World(2, "meta/moon_ground.jpg", "meta/stars.jpg");
+		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg");
+		ringWorld = new World(3, "meta/ring_ground.jpg", "meta/ring_bkg.jpg");
+		worlds = new ArrayList<World>();
+		worlds.add(moonWorld); 
+		worlds.add(xmasWorld);
+		worlds.add(ringWorld);
+		
+		currWorld = this.worlds.get(0);
+		currWorldIndex = 0;
+
+		
+		btn1 = new Button(1, 10, height - 30, 100, 30, "Monde 1", null);
+		btn2 = new Button(2, 10 + 100, height - 30, 100, 30, "Monde 2", null);
+		btn3 = new Button(3, 10 + 200, height - 30, 100, 30, "Monde 3", null);
+		btn1.setPressed(true);
+		btn2.setPressed(false);
+		btn3.setPressed(false);
 	}
 
 	@Override
 	public void update(double timeMultiplier) {
 		balle.update();
-		world1.update();
+		currWorld.update();
 	}
 
 	@Override
 	public void render() {
 		super.render();
 
-		writeCentered(font16, "Menu", width / 2, 10);
+		currWorld.render();
+		
 		balle.render();
-		world1.render();
+		
+		btn1.render();
+		btn2.render();
+		btn3.render();
 	}
 
 	@Override
@@ -41,5 +83,27 @@ public class Game extends GUI {
 		super.onKeyPressed(key);
 		if (key == 27)
 			endRequest = true;
+		
+		if (key == Keyboard.KEY_1) {
+			currWorldIndex = 0;
+			currWorld = worlds.get(currWorldIndex);
+			btn1.setPressed(true);
+			btn2.setPressed(false);
+			btn3.setPressed(false);
+		}
+		if (key == Keyboard.KEY_2) {
+			currWorldIndex = 1;
+			currWorld = worlds.get(currWorldIndex);
+			btn1.setPressed(false);
+			btn2.setPressed(true);
+			btn3.setPressed(false);
+		}
+		if (key == Keyboard.KEY_3) {
+			currWorldIndex = 2;
+			currWorld = worlds.get(currWorldIndex);
+			btn1.setPressed(false);
+			btn2.setPressed(false);
+			btn3.setPressed(true);
+		}
 	}
 }

@@ -22,12 +22,12 @@ public class World {
 
 	private ArrayList<Obstacle> obstacles;
 
-	public World(double rotationSpeed, String cheminTexture) {
+	public World(double rotationSpeed, String groundTexture, String bkgTxt) {
 		this.worldId = 0; // TODO
 		this.rotationSpeed = rotationSpeed;
 
-		this.bkgTexture = new Image("meta/stars.jpg");
-		this.ceilTexture = new Image(cheminTexture);
+		this.bkgTexture = new Image(bkgTxt);
+		this.ceilTexture = new Image(groundTexture);
 
 		this.angle = 0;
 
