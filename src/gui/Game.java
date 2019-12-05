@@ -6,20 +6,22 @@ import static util.Global.width;
 import static util.Renderer.font16;
 import static util.Renderer.writeCentered;
 
+import audio.SoundsManager;
 import game.Ball;
 import game.World;
-import util.Image;
 
 public class Game extends GUI
 {
 	
 	private Ball balle;
 	private World world1;
+	private SoundsManager music;
 	
 	
 	public Game()
 	{
 		super();
+		music = new SoundsManager();
 		balle = new Ball(width/2, height/2, 25);
 		world1 = new World(2, "meta/sky.jpg");
 		
