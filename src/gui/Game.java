@@ -38,7 +38,7 @@ public class Game extends GUI {
 	{
 		super();
 		music = new SoundsManager();
-		balle = new Ball(width/2, height/2 - width/4, 25);
+		balle = new Ball(width/4, Math.PI/2, 25);
 		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
 		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
 		ringWorld = new World(3, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
