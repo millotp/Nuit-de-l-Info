@@ -16,6 +16,7 @@ import org.lwjgl.opengl.GL11;
 import game.Ball;
 import gui.GUI;
 import gui.Game;
+import menu.Menu;
 
 public class Main {
 	public static Main theMain = new Main();
@@ -47,7 +48,7 @@ public class Main {
 
 		this.resize(Display.getWidth(), Display.getHeight());
 		
-		this.changeGUI("GAME");
+		this.changeGUI("MENU");
 		this.lastTime = System.nanoTime();
 	}
 
@@ -141,6 +142,9 @@ public class Main {
 		switch (name) {
 		case "GAME":
 			currentGUI = new Game();
+			break;
+		case "MENU":
+			currentGUI = new Menu();
 			break;
 		}
 	}
