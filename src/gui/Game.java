@@ -1,10 +1,7 @@
 package gui;
 
 import static util.Global.endRequest;
-import static util.Global.height;
-import static util.Global.width;
-import static util.Renderer.font16;
-import static util.Renderer.writeCentered;
+import static util.Global.*;
 
 
 import java.util.ArrayList;
@@ -22,39 +19,41 @@ public class Game extends GUI {
 	private World moonWorld;
 	private World xmasWorld;
 	private World ringWorld;
-	
+
 	private ArrayList<World> worlds;
-	
+
 	private World currWorld;
 	private int currWorldIndex;
 
-	
 	private Button btn1;
 	private Button btn2;
 	private Button btn3;
+
 	
 	private SoundsManager music;	
 	
 	private int score;
 	
-	public Game()
-	{
+
+	public Game() {
+
 		super();
 		score = 0;
 		music = new SoundsManager();
-		balle = new Ball(width/2, height/2 - width/4, 25);
+		balle = new Ball(width/4, Math.PI/2, 25);
+
 		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
 		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
 		ringWorld = new World(3, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
 		worlds = new ArrayList<World>();
-		worlds.add(moonWorld); 
+		worlds.add(moonWorld);
 		worlds.add(xmasWorld);
 		worlds.add(ringWorld);
-	
+
 		currWorld = this.worlds.get(0);
 		currWorldIndex = 0;
 		music.changeMusicTheme(currWorld.getTheme());
-		
+
 		btn1 = new Button(1, 10, height - 30, 100, 30, "Monde 1", null);
 		btn2 = new Button(2, 10 + 100, height - 30, 100, 30, "Monde 2", null);
 		btn3 = new Button(3, 10 + 200, height - 30, 100, 30, "Monde 3", null);
@@ -67,6 +66,9 @@ public class Game extends GUI {
 	public void update(double timeMultiplier) {
 		balle.update();
 		currWorld.update();
+
+		balle.isDead = currWorld.collide(balle);
+
 	}
 
 	@Override
@@ -74,9 +76,9 @@ public class Game extends GUI {
 		super.render();
 
 		currWorld.render();
-		
+
 		balle.render();
-		
+
 		btn1.render();
 		btn2.render();
 		btn3.render();
@@ -87,7 +89,7 @@ public class Game extends GUI {
 		super.onKeyPressed(key);
 		if (key == 27)
 			endRequest = true;
-		
+
 		if (key == Keyboard.KEY_1) {
 			currWorldIndex = 0;
 			currWorld = worlds.get(currWorldIndex);
