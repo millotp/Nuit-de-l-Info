@@ -15,6 +15,7 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
+import audio.SoundsManager;
 import game.Ball;
 import gui.GUI;
 import gui.Game;
@@ -29,6 +30,7 @@ public class Main {
 	private boolean lastPressed;
 	private long currentTime, elapsedTime, lastTime;
 	private GUI currentGUI;
+
 
 	private void init() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(400, 800));

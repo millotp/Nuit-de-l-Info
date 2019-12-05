@@ -12,9 +12,6 @@ public class SoundsManager {
 	private Audio musicEffect;
 	
 	public SoundsManager() {
-		changeMusicTheme("espace");
-		addMusicEffect("laser");
-
 	}
 	
 	public void addMusicEffect(String effect) {
@@ -38,11 +35,15 @@ public class SoundsManager {
 	
 	public void changeMusicTheme(String theme) {
 		try {
-			if (theme == "espace") {
+			if (theme == "moon") {
 				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/espace.wav"));
 				backgroundMusic.playAsMusic(1.0f, 1.0f, true);				
 			}
-			if (theme == "pluie") {
+			if (theme == "xmas") {
+				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/noel.wav"));
+				backgroundMusic.playAsMusic(1.0f, 1.0f, true);			
+			}
+			if (theme == "ring") {
 				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/pluie.wav"));
 				backgroundMusic.playAsMusic(1.0f, 1.0f, true);			
 			}

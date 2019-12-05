@@ -16,17 +16,21 @@ public class World {
 	private int worldId;
 	private double rotationSpeed;
 	private double angle;
+	private String theme;
 
-	public World(double rotationSpeed, String groundTexture, String bkgTxt) {
+	public World(double rotationSpeed, String groundTexture, String bkgTxt, String theme) {
 		this.worldId = 0; // TODO
 		this.rotationSpeed = rotationSpeed;
 
 		this.bkgTexture = new Image(bkgTxt);
 		this.ceilTexture = new Image(groundTexture);
-
+		this.theme = theme;
 		this.angle = 0;
 	}
 
+	public String getTheme() {
+		return theme;
+	}
 	public void render() {
 
 		bkgTexture.render(0, 0, width, height);

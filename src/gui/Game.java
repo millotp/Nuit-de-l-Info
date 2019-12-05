@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
-
+import audio.SoundsManager;
 import game.Ball;
 import game.World;
 
@@ -33,24 +33,24 @@ public class Game extends GUI
 	private Button btn1;
 	private Button btn2;
 	private Button btn3;
-	
+	private SoundsManager music;	
 	
 	public Game()
 	{
 		super();
-
+		music = new SoundsManager();
 		balle = new Ball(width/2, height/2 - width/4, 25);
-		moonWorld = new World(2, "meta/moon_ground.jpg", "meta/stars.jpg");
-		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg");
-		ringWorld = new World(3, "meta/ring_ground.jpg", "meta/ring_bkg.jpg");
+		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
+		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
+		ringWorld = new World(3, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
 		worlds = new ArrayList<World>();
 		worlds.add(moonWorld); 
 		worlds.add(xmasWorld);
 		worlds.add(ringWorld);
-		
+	
 		currWorld = this.worlds.get(0);
 		currWorldIndex = 0;
-
+		music.changeMusicTheme(currWorld.getTheme());
 		
 		btn1 = new Button(1, 10, height - 30, 100, 30, "Monde 1", null);
 		btn2 = new Button(2, 10 + 100, height - 30, 100, 30, "Monde 2", null);
@@ -103,6 +103,8 @@ public class Game extends GUI
 			btn1.setPressed(true);
 			btn2.setPressed(false);
 			btn3.setPressed(false);
+			music.addMusicEffect("laser");
+			music.changeMusicTheme(currWorld.getTheme());
 		}
 		if (key == Keyboard.KEY_2) {
 			currWorldIndex = 1;
@@ -110,6 +112,8 @@ public class Game extends GUI
 			btn1.setPressed(false);
 			btn2.setPressed(true);
 			btn3.setPressed(false);
+			music.addMusicEffect("laser");
+			music.changeMusicTheme(currWorld.getTheme());
 		}
 		if (key == Keyboard.KEY_3) {
 			currWorldIndex = 2;
@@ -117,6 +121,8 @@ public class Game extends GUI
 			btn1.setPressed(false);
 			btn2.setPressed(false);
 			btn3.setPressed(true);
+			music.addMusicEffect("laser");
+			music.changeMusicTheme(currWorld.getTheme());
 		}
 	}
 }
