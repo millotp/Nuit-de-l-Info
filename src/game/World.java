@@ -115,7 +115,15 @@ public class World {
 						o.pos.r = 7 * width / 16;
 					}
 				} else {
-					
+					o.size.a = Math.random() * 0.3 + 0.2;
+					o.goalSize = ((7 * width / 16 - width / 6) / 2 - 27) * Math.random();
+					if (Math.random() < 0.5) { // en bas
+						o.morphSpeed = 1;
+						o.pos.r = width / 6;
+					} else { // en haut
+						o.morphSpeed = -1;
+						o.pos.r = 7 * width / 16;
+					}
 				}
 			}
 		}

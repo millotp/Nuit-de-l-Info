@@ -3,6 +3,7 @@ package game;
 import static java.lang.Math.*;
 import static java.lang.Math.sin;
 import static util.Global.map;
+import static util.Renderer.*;
 
 import org.lwjgl.opengl.GL11;
 
@@ -17,10 +18,13 @@ public class Obstacle {
 	boolean isMorphing;
 	boolean isPoping;
 	double morphSpeed;
+	
+	int color;
 
 	public Obstacle(VecPolar pos, VecPolar size) {
 		this.pos = pos;
 		this.size = size;
+		this.color = (int)(Math.random() * 0xFFFFFF) << 8 | 0xFF;
 	}
 
 	public void update(double speed) {
@@ -51,7 +55,7 @@ public class Obstacle {
 	}
 
 	public void render() {
-		GL11.glColor3d(1, 0, 0);
+		setColor(color);
 		Renderer.setMode(GL11.GL_FILL);
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
 		for (int i = 0; i < 20; i++) {
