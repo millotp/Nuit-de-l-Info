@@ -12,8 +12,10 @@ import util.VecPolar;
 public class Obstacle {
 	VecPolar pos;
 	VecPolar size;
-	
+	double goalSize;
+
 	boolean isMorphing;
+	boolean isPoping;
 	double morphSpeed;
 
 	public Obstacle(VecPolar pos, VecPolar size) {
@@ -23,13 +25,27 @@ public class Obstacle {
 
 	public void update(double speed) {
 		pos.a += speed * Math.PI / 180;
-		if(isMorphing && size.r > 0) {
-			if(morphSpeed < 0 ) {
-				size.r += morphSpeed;
+		if (isMorphing) {
+			if (isPoping && size.r < goalSize) {
+				if (morphSpeed > 0) {
+					size.r += morphSpeed;
+				}
+				if (morphSpeed < 0) {
+					pos.r += morphSpeed;
+					size.r -= morphSpeed;
+				}
+				
+				if(size.r >= goalSize)
+					isMorphing = false;
 			}
-			if(morphSpeed > 0) {
-				pos.r += morphSpeed;
-				size.r -= morphSpeed;
+			if (!isPoping && size.r > 0) {
+				if (morphSpeed < 0) {
+					size.r += morphSpeed;
+				}
+				if (morphSpeed > 0) {
+					pos.r += morphSpeed;
+					size.r -= morphSpeed;
+				}
 			}
 		}
 	}
@@ -49,10 +65,12 @@ public class Obstacle {
 	}
 
 	public boolean collideWith(Ball ball) {
-		if(ball.pos.r - ball.radius > pos.r + size.r || ball.pos.r + ball.radius < pos.r)
+		if (ball.pos.r - ball.radius > pos.r + size.r || ball.pos.r + ball.radius < pos.r)
 			return false;
 		double half_angle = atan(ball.radius / ball.pos.r);
-		if(ball.pos.a + half_angle < pos.a || ball.pos.a - half_angle > pos.a + size.a)
+
+		if (ball.pos.a + half_angle < pos.a % (2 * Math.PI)
+				|| ball.pos.a - half_angle > (pos.a + size.a) % (2 * Math.PI))
 			return false;
 		return true;
 	}
