@@ -32,6 +32,7 @@ public class Ball {
 			GL11.glColor3d(1, 0, 0);
 		Renderer.ellipse(pos.r * cos(pos.a), pos.r * sin(pos.a), 2 * this.radius, 2 * this.radius, 0.5);
 		this.texture.unbind();
+		GL11.glPopMatrix();
 	}
 
 	public void update() {

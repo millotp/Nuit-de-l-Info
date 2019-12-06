@@ -19,6 +19,8 @@ public class World {
 	private double rotationSpeed;
 	private double angle;
 	private String theme;
+	
+	private static double gateAngle = 3 * Math.PI / 4;
 
 	private ArrayList<Obstacle> obstacles;
 
@@ -79,6 +81,22 @@ public class World {
 		angle += 0.1 * this.rotationSpeed;
 		for (Obstacle o : this.obstacles) {
 			o.update(0.1 * this.rotationSpeed);
+		}
+	}
+	
+	public void morph() {
+		for(Obstacle o : obstacles) {
+			if(o.pos.a + o.size.a >= gateAngle && !o.isMorphing) {
+				o.isMorphing = true;
+				if(o.pos.r > width / 6)
+					o.morphSpeed = 1;
+				else
+					o.morphSpeed = -1;
+			}
+			if(o.size.r <= 0) {
+				//one point
+				o.isMorphing = false;
+			}
 		}
 	}
 
