@@ -15,14 +15,17 @@ public class Score extends GUI {
 	public Score(){
 		super();
 		this.loadBestScore();
+		addButton((width - fontMenu.getWidth("Retour Menu")) / 2 , (this.bestScore.length+1) * this.lineGap + height/7, fontMenu.getWidth("Retour Menu"), 30, "Retour Menu", "MENU");
+
 	}
 	
 	@Override
 	public void render(){
 		writeCentered(fontMenu, "Highest Scores", width / 2, height/12);
 		for (int i = 0 ; i < this.bestScore.length ; i++){
-			writeCentered(fontMenu, (i+1) + ". " + (this.bestScore[i] == null ? "" : this.bestScore[i]), width / 2, height/6 + (i+1) * this.lineGap);
+			writeCentered(fontMenu, (i+1) + ". " + (this.bestScore[i] == null ? "" : this.bestScore[i]), width / 2, height/7 + (i+1) * this.lineGap);
 		}
+		super.render();
 	}
 	
 	public void loadBestScore(){

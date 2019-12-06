@@ -22,7 +22,7 @@ public class World {
 	private String theme;
 
 	private static double gateEndAngle = 3 * Math.PI / 4;
-	private static double gatePopAngle = 5 * Math.PI / 4;
+	private static double gatePopAngle = 3.2 * Math.PI / 4;
 
 	private ArrayList<Obstacle> obstacles;
 
@@ -36,13 +36,13 @@ public class World {
 		this.angle = 0;
 
 		this.obstacles = new ArrayList<Obstacle>();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 5; i++) {
 			if (Math.random() < 0.5)
-				this.obstacles.add(new Obstacle(new VecPolar(width / 6, (i / 6.0) * Math.PI * 2),
-						new VecPolar(2 * width / 16, Math.random() * 0.3 + 0.2)));
+				this.obstacles.add(new Obstacle(new VecPolar(width / 6 , (i / 5.0) * Math.PI * 2),
+						new VecPolar(width / 16,  0.1 )));
 			else
-				this.obstacles.add(new Obstacle(new VecPolar(5 * width / 16, (i / 6.0) * Math.PI * 2),
-						new VecPolar(2 * width / 16, Math.random() * 0.3 + 0.2)));
+				this.obstacles.add(new Obstacle(new VecPolar(5 * width / 16 + width / 16, (i / 5.0) * Math.PI * 2),
+						new VecPolar(width / 16,  0.1 )));
 		}
 	}
 
@@ -92,47 +92,53 @@ public class World {
 		}
 	}
 
-	public void morph(boolean victime, Game game) {
+	public boolean morph(boolean victime, Game game) {
 		for (Obstacle o : obstacles) {
-			if ((o.pos.a + o.size.a) % (2 * Math.PI) >= gateEndAngle
-					&& (o.pos.a + o.size.a) % (2 * Math.PI) <= gatePopAngle && !o.isMorphing) {
+			if ((o.pos.a) % (2 * Math.PI) >= gateEndAngle
+					&& (o.pos.a) % (2 * Math.PI) <= gatePopAngle && !o.isMorphing) {
 				o.isPoping = false;
 
 				game.increaseScore();
 
 				o.isMorphing = true;
 				if (o.pos.r > width / 6)
-					o.morphSpeed = 1;
+					o.morphSpeed = 20;
 				else
-					o.morphSpeed = -1;
+					o.morphSpeed = -20;
 			}
 
-			if (o.isMorphing && o.size.r <= 0 && (o.pos.a + o.size.a) % (2 * Math.PI) >= gatePopAngle) {
+			if (o.isMorphing && o.size.r <= 0 && (o.pos.a) % (2 * Math.PI) >= gatePopAngle) {
 				o.isPoping = true;
+				System.out.println(theme + "  " + victime);
 				if (!victime) {
-					o.size.a = Math.random() * 0.3 + 0.2;
-					o.goalSize = Math.random() * (7 * width / 16 - width / 6);
+					o.size.a = 0.1;
+					
+					o.goalSize = Math.random() * (7 * width/16 - width/6);
 					if (Math.random() < 0.5) { // en bas
-						o.morphSpeed = 1;
+						o.morphSpeed = 20;
 						o.pos.r = width / 6;
 					} else { // en haut
-						o.morphSpeed = -1;
+						o.morphSpeed = -20;
 						o.pos.r = 7 * width / 16;
 					}
 				} else {
-					o.size.a = Math.random() * 0.3 + 0.2;
-					o.goalSize = ((7 * width / 16 - width / 6) / 2 - 27) * Math.random();
+					
+					o.size.a = 0.1;
+					
+					o.goalSize = ((7 * width/16 - width/6)/2 - 27) * Math.random();
 					if (Math.random() < 0.5) { // en bas
-						o.morphSpeed = 1;
+						o.morphSpeed = 20;
 						o.pos.r = width / 6;
 					} else { // en haut
-						o.morphSpeed = -1;
+						o.morphSpeed = -20;
 						o.pos.r = 7 * width / 16;
 					}
 				}
+				return true;
 
 			}
 		}
+		return false;
 	}
 
 }

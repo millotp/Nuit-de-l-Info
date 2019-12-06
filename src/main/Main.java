@@ -20,6 +20,7 @@ import gui.GUI;
 import gui.Game;
 import menu.Death;
 import menu.Menu;
+import menu.Players;
 import menu.Score;
 
 public class Main {
@@ -53,7 +54,7 @@ public class Main {
 
 		this.resize(Display.getWidth(), Display.getHeight());
 
-		this.changeGUI("GAME");
+		this.changeGUI("MENU");
 		this.lastTime = System.nanoTime();
 	}
 
@@ -156,6 +157,9 @@ public class Main {
 			break;
 		case "DEATH":
 			currentGUI = new Death();
+			break;
+		case "PLAYER":
+			currentGUI = new Players();
 			break;
 		}
 	}

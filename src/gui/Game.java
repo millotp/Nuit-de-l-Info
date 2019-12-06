@@ -3,7 +3,8 @@ package gui;
 import static util.Global.endRequest;
 import static util.Global.height;
 import static util.Global.width;
-import static util.Renderer.*;
+import static util.Renderer.fontMenu;
+import static util.Renderer.write;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 import audio.SoundsManager;
 import game.Ball;
 import game.World;
+import main.Main;
 
 public class Game extends GUI {
 
@@ -37,6 +39,8 @@ public class Game extends GUI {
 	private int score;
 	private double zoom;
 	private double startZooming;
+	private int victime;
+	private int gateCrossed;
 
 	
 
@@ -75,19 +79,27 @@ public class Game extends GUI {
 	public void update(double timeMultiplier) {
 
 		balle.update();
-		int victime = (int) (Math.random() * worlds.size());
+		if (gateCrossed >= worlds.size()) {
+		   victime = (int) (Math.random() * worlds.size());
+		   gateCrossed = 0;
+		}
+		
+
 		for (int i = 0; i < worlds.size(); i++) {
 			World w = worlds.get(i);
 			w.update();
 
-			w.morph(i == victime, this);
+			if (w.morph(i == victime, this)) {
+				gateCrossed++;
+			}
+				
 
 		}
 
 		balle.isDead = currWorld.collide(balle);
 
 		if (balle.isDead) {
-			// Main.theMain.changeGUI("DEATH");
+			 Main.theMain.changeGUI("DEATH");
 		}
 
 	}
