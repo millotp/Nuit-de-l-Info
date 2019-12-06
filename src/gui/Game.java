@@ -1,12 +1,13 @@
 package gui;
 
-import static util.Global.endRequest;
 import static util.Global.*;
-
+import static util.Renderer.fontMenu;
+import static util.Renderer.writeCentered;
 
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.Color;
 
 import audio.SoundsManager;
 import game.Ball;
@@ -62,13 +63,14 @@ public class Game extends GUI {
 		btn3.setPressed(false);
 	}
 
+	public void setScore(int score) {
+	    this.score = score;
+	}
 	@Override
 	public void update(double timeMultiplier) {
-		balle.update();
+		balle.update(score);
 		currWorld.update();
-
 		balle.isDead = currWorld.collide(balle);
-
 	}
 
 	@Override
@@ -78,7 +80,8 @@ public class Game extends GUI {
 		currWorld.render();
 
 		balle.render();
-
+		
+		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);
 		btn1.render();
 		btn2.render();
 		btn3.render();

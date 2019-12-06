@@ -17,12 +17,13 @@ public class Ball {
 	public double radius;
 	private Image texture;
 	public boolean isDead;
+	private int nbLap;
 
 	public Ball(double r, double a, double radius) {
 		pos = new VecPolar(r, a);
 		speed = new VecPolar(3, 0);
 		this.radius = radius;
-
+		nbLap = 0;
 		this.texture = new Image("meta/ball.jpg");
 	}
 
@@ -40,11 +41,14 @@ public class Ball {
 		GL11.glPopMatrix();
 	}
 
-	public void update() {
+	public void update(int score) {
 		if (this.pos.r - this.radius < width/6 || this.pos.r + this.radius > 7*width/16){
 			this.speed.r *= -1;
 		}
 		this.pos.r += this.speed.r;
+		
+		
+		
 	}
 
 }
