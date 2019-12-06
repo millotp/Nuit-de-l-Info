@@ -20,8 +20,9 @@ public class World {
 	private double rotationSpeed;
 	private double angle;
 	private String theme;
-	
-	private static double gateAngle = 3 * Math.PI / 4;
+
+	private static double gateEndAngle = 3 * Math.PI / 4;
+	private static double gatePopAngle = 5 * Math.PI / 4;
 
 	private ArrayList<Obstacle> obstacles;
 
@@ -35,8 +36,14 @@ public class World {
 		this.angle = 0;
 
 		this.obstacles = new ArrayList<Obstacle>();
-		this.obstacles.add(new Obstacle(new VecPolar(50, 0), new VecPolar(130, 1)));
-		this.obstacles.add(new Obstacle(new VecPolar(280, 2), new VecPolar(70, 0.5)));
+		for (int i = 0; i < 6; i++) {
+			if (Math.random() < 0.5)
+				this.obstacles.add(new Obstacle(new VecPolar(width / 6, (i / 6.0) * Math.PI * 2),
+						new VecPolar(2 * width / 16, Math.random() * 0.3 + 0.2)));
+			else
+				this.obstacles.add(new Obstacle(new VecPolar(5 * width / 16, (i / 6.0) * Math.PI * 2),
+						new VecPolar(2 * width / 16, Math.random() * 0.3 + 0.2)));
+		}
 	}
 
 	public String getTheme() {
@@ -52,7 +59,7 @@ public class World {
 		GL11.glRotated(angle, 0, 0, 1);
 
 		this.ceilTexture.bind();
-		Renderer.ellipse(0, 0, width, width, 0.5);
+		Renderer.ellipse(0, 0, width, width, 0.45);
 		GL11.glRotated(-angle, 0, 0, 1);
 		this.bkgTexture.bind();
 		Renderer.ellipse(0, 0, 7 * width / 8, 7 * width / 8, .25);
@@ -84,28 +91,40 @@ public class World {
 			o.update(0.1 * this.rotationSpeed);
 		}
 	}
-	
-	public void morph(Game game) {
-		for(Obstacle o : obstacles) {
-			if(o.pos.a + o.size.a >= gateAngle && !o.isMorphing) {
-				if (o.scored  == false) {
-				    o.scored = true;
-				    game.setBoom(o.scored);
-				}
+
+	public void morph(boolean victime, Game game) {
+		for (Obstacle o : obstacles) {
+			if ((o.pos.a + o.size.a) % (2 * Math.PI) >= gateEndAngle
+					&& (o.pos.a + o.size.a) % (2 * Math.PI) <= gatePopAngle && !o.isMorphing) {
+				o.isPoping = false;
+
+				game.increaseScore();
 
 				o.isMorphing = true;
-				if(o.pos.r > width / 6)
+				if (o.pos.r > width / 6)
 					o.morphSpeed = 1;
 				else
 					o.morphSpeed = -1;
 			}
-			if(o.size.r <= 0) {
-				
-				o.isMorphing = false;
-				
+
+			if (o.isMorphing && o.size.r <= 0 && (o.pos.a + o.size.a) % (2 * Math.PI) >= gatePopAngle) {
+				o.isPoping = true;
+				if (!victime) {
+					o.size.a = Math.random() * 0.3 + 0.2;
+					o.goalSize = Math.random() * (7 * width / 16 - width / 6);
+					if (Math.random() < 0.5) { // en bas
+						o.morphSpeed = 1;
+						o.pos.r = width / 6;
+					} else { // en haut
+						o.morphSpeed = -1;
+						o.pos.r = 7 * width / 16;
+					}
+				} else {
+
+				}
+
 			}
 		}
 	}
-	
 
 }

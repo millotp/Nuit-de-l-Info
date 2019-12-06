@@ -18,6 +18,7 @@ import org.lwjgl.opengl.PixelFormat;
 import game.Ball;
 import gui.GUI;
 import gui.Game;
+import menu.Death;
 import menu.Menu;
 import menu.Score;
 
@@ -152,6 +153,9 @@ public class Main {
 			break;
 		case "SCORE":
 			currentGUI = new Score();
+			break;
+		case "DEATH":
+			currentGUI = new Death();
 			break;
 		}
 	}

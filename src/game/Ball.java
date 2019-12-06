@@ -24,7 +24,7 @@ public class Ball {
 
 	public Ball(double r, double a, double radius) {
 		pos = new VecPolar(r, a);
-		speed = new VecPolar(3, 0);
+		speed = new VecPolar(0, 0);
 		this.radius = radius;
 		this.texture = new Image("meta/ball.jpg");
 	}

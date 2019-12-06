@@ -1,13 +1,14 @@
 package gui;
 
-import static util.Global.*;
+import static util.Global.endRequest;
+import static util.Global.height;
+import static util.Global.width;
 import static util.Renderer.fontMenu;
 import static util.Renderer.writeCentered;
 
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.Color;
 
 import audio.SoundsManager;
 import game.Ball;
@@ -30,6 +31,7 @@ public class Game extends GUI {
 	private Button btn2;
 	private Button btn3;
 
+
 	
 	private SoundsManager music;	
 	private int score;
@@ -37,17 +39,18 @@ public class Game extends GUI {
 
 	
 
+
 	public Game() {
 
 		super();
 		score = 0;
 		music = new SoundsManager();
 
-		balle = new Ball(width/4, Math.PI/2, 25);
+		balle = new Ball((width / 6 + 7 * width / 16) / 2, Math.PI / 2, 25);
 
-		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
-		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
-		ringWorld = new World(2, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
+		moonWorld = new World(5, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
+		xmasWorld = new World(5, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
+		ringWorld = new World(5, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
 		worlds = new ArrayList<World>();
 		worlds.add(moonWorld);
 		worlds.add(xmasWorld);
@@ -65,24 +68,33 @@ public class Game extends GUI {
 		btn3.setPressed(false);
 	}
 
-	
-	public void setBoom(boolean boom) {
-		this.boom = boom;
-	}
-	
+
+
 	@Override
 	public void update(double timeMultiplier) {
 
 		balle.update();
-		for(World w : worlds) {
+		int victime = (int) (Math.random() * worlds.size());
+		for (int i = 0; i < worlds.size(); i++) {
+			World w = worlds.get(i);
 			w.update();
-			w.morph(this);
+
+			w.morph(i == victime, this);
+
 		}
 
-
 		balle.isDead = currWorld.collide(balle);
+
+		if (balle.isDead) {
+			// Main.theMain.changeGUI("DEATH");
+		}
+
 	}
 	
+	public void increaseScore() {
+		renderScoreEffect();
+		score++;
+	}
 	public void renderScoreEffect() {
 		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);
 	}
@@ -94,13 +106,11 @@ public class Game extends GUI {
 		currWorld.render();
 
 		balle.render();
+
 		
-		if (boom == true) {
-			score++;
-			renderScoreEffect();
-			boom = false;
-		}
 		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);		
+
+
 		btn1.render();
 		btn2.render();
 		btn3.render();
