@@ -13,7 +13,7 @@ import util.VecPolar;
 
 public class Ball {
 	
-	public static String picture = "ball.jpg";
+	public static String picture = "ghost.png";
 	public VecPolar pos;
 	public VecPolar speed;
 	public double radius;

@@ -24,12 +24,12 @@ public class Players extends GUI {
 	public Players(){
 		super();
 		this.imagePlayers = new Image[3];
-		addButton((width - widthButton) / 2 - widthButton, height/3, widthButton, heightButton, "Roland Groz", "GAME");
-		this.imagePlayers[0] = new Image("meta/ball.jpg");
-		addButton((width - widthButton) / 2, height/3, widthButton, heightButton, "Jean Roch", "GAME");
-		this.imagePlayers[1] = new Image("meta/jlr.png");
-		addButton((width - widthButton) / 2 + widthButton, height/3, widthButton, heightButton, "Giroud", "GAME");
-		this.imagePlayers[2] = new Image("meta/giroud.jpg");
+		addButton((width - widthButton) / 2 - widthButton, height/3, widthButton, heightButton, "Yellow Ghost", "GAME");
+		this.imagePlayers[0] = new Image("meta/ghost.png");
+		addButton((width - widthButton) / 2, height/3, widthButton, heightButton, "Red Ghost", "GAME");
+		this.imagePlayers[1] = new Image("meta/red_ghost.png");
+		addButton((width - widthButton) / 2 + widthButton, height/3, widthButton, heightButton, "Blue Ghost", "GAME");
+		this.imagePlayers[2] = new Image("meta/ghost_blue.png");
 
 		
 	}
@@ -57,13 +57,13 @@ public class Players extends GUI {
 		super.onClick();
 		switch(this.pressedButton){
 			case 0:
-				Ball.picture = "ball.jpg";
+				Ball.picture = "ghost.png";
 				break;
 			case 1:
-				Ball.picture = "jlr.png";
+				Ball.picture = "red_ghost.png";
 				break;
 			case 2:
-				Ball.picture = "giroud.jpg";
+				Ball.picture = "ghost_blue.png";
 				break;
 		}
 			
