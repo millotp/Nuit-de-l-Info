@@ -2,7 +2,7 @@ package game;
 
 import static java.lang.Math.*;
 import static java.lang.Math.sin;
-import static util.Global.map;
+import static util.Global.*;
 import static util.Renderer.*;
 
 import org.lwjgl.opengl.GL11;
@@ -18,13 +18,13 @@ public class Obstacle {
 	boolean isMorphing;
 	boolean isPoping;
 	double morphSpeed;
-	
+
 	int color;
 
 	public Obstacle(VecPolar pos, VecPolar size) {
 		this.pos = pos;
 		this.size = size;
-		this.color = (int)(Math.random() * 0xFFFFFF) << 8 | 0xFF;
+		this.color = (int) (Math.random() * 0xFFFFFF) << 8 | 0xFF;
 	}
 
 	public void update(double speed) {
@@ -38,9 +38,13 @@ public class Obstacle {
 					pos.r += morphSpeed;
 					size.r -= morphSpeed;
 				}
-				
-				if(size.r >= goalSize)
+
+				if (size.r >= goalSize) {
 					isMorphing = false;
+					if (pos.r > width / 6)
+						pos.r = 7 * width / 16 - goalSize;
+					size.r = goalSize;
+				}
 			}
 			if (!isPoping && size.r > 0) {
 				if (morphSpeed < 0) {
