@@ -11,7 +11,8 @@ import util.Renderer;
 import util.VecPolar;
 
 public class Ball {
-
+	
+	public static String picture = "ball.jpg";
 	public VecPolar pos;
 	public VecPolar speed;
 	public double radius;
@@ -24,7 +25,7 @@ public class Ball {
 		speed = new VecPolar(3, 0);
 		this.radius = radius;
 		nbLap = 0;
-		this.texture = new Image("meta/ball.jpg");
+		this.texture = new Image("meta/" + picture);
 	}
 
 	public void render() {

@@ -18,7 +18,7 @@ public class Menu extends GUI {
 	
 	public Menu(){
 		super();
-		addButton((width - widthButton) / 2, height/2 + this.buttons.size()*this.buttonGap, widthButton, heightButton, "New Game", "GAME");
+		addButton((width - widthButton) / 2, height/2 + this.buttons.size()*this.buttonGap, widthButton, heightButton, "New Game", "PLAYER");
 		addButton((width - widthButton) / 2, height/2 + this.buttons.size()*this.buttonGap, widthButton, heightButton, "Highest Score", "SCORE");
 		addButton((width - widthButton) / 2, height/2 + this.buttons.size()*this.buttonGap, widthButton, heightButton, "Quit", "EXIT");
 	}
