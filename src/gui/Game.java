@@ -1,8 +1,8 @@
 package gui;
 
 import static util.Global.endRequest;
-import static util.Global.*;
-
+import static util.Global.height;
+import static util.Global.width;
 
 import java.util.ArrayList;
 
@@ -29,11 +29,9 @@ public class Game extends GUI {
 	private Button btn2;
 	private Button btn3;
 
-	
-	private SoundsManager music;	
-	
+	private SoundsManager music;
+
 	private int score;
-	
 
 	public Game() {
 
@@ -41,11 +39,11 @@ public class Game extends GUI {
 		score = 0;
 		music = new SoundsManager();
 
-		balle = new Ball(width/4, Math.PI/2, 25);
+		balle = new Ball(width / 4, Math.PI / 2, 25);
 
-		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
-		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
-		ringWorld = new World(2, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
+		moonWorld = new World(5, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
+		xmasWorld = new World(5, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
+		ringWorld = new World(5, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
 		worlds = new ArrayList<World>();
 		worlds.add(moonWorld);
 		worlds.add(xmasWorld);
@@ -66,9 +64,9 @@ public class Game extends GUI {
 	@Override
 	public void update(double timeMultiplier) {
 		balle.update();
-		for(World w : worlds) {
+		for (World w : worlds) {
 			w.update();
-			w.morph();
+			w.morph(false);
 		}
 
 		balle.isDead = currWorld.collide(balle);
