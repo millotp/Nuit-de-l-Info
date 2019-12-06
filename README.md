@@ -5,6 +5,7 @@ Nous avons choisi le Java pour développer notre jeu car notre équipe était pl
 
 ## Compilation
 
+/!\ Fonctionne uniquement avec Java 8
 Le makefile fournit les commandes minimales pour faire tourner le jeu, il faut importer les libraires dans lib/ 
 et mettre les natives
 
