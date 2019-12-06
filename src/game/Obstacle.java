@@ -12,6 +12,9 @@ import util.VecPolar;
 public class Obstacle {
 	VecPolar pos;
 	VecPolar size;
+	
+	boolean isMorphing;
+	double morphSpeed;
 
 	public Obstacle(VecPolar pos, VecPolar size) {
 		this.pos = pos;
@@ -20,6 +23,15 @@ public class Obstacle {
 
 	public void update(double speed) {
 		pos.a += speed * Math.PI / 180;
+		if(isMorphing && size.r > 0) {
+			if(morphSpeed < 0 ) {
+				size.r += morphSpeed;
+			}
+			if(morphSpeed > 0) {
+				pos.r += morphSpeed;
+				size.r -= morphSpeed;
+			}
+		}
 	}
 
 	public void render() {

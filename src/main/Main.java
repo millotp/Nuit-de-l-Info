@@ -15,7 +15,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
-import audio.SoundsManager;
 import game.Ball;
 import gui.GUI;
 import gui.Game;

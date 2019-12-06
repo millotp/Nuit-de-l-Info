@@ -1,12 +1,13 @@
 package gui;
 
-import static util.Global.endRequest;
 import static util.Global.*;
-
+import static util.Renderer.fontMenu;
+import static util.Renderer.writeCentered;
 
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.Color;
 
 import audio.SoundsManager;
 import game.Ball;
@@ -29,16 +30,24 @@ public class Game extends GUI {
 	private Button btn1;
 	private Button btn2;
 	private Button btn3;
-	private SoundsManager music;
+
+	
+	private SoundsManager music;	
+	
+	private int score;
+	
 
 	public Game() {
+
 		super();
+		score = 0;
 		music = new SoundsManager();
+
 		balle = new Ball(width/4, Math.PI/2, 25);
 
 		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
 		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
-		ringWorld = new World(3, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
+		ringWorld = new World(2, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
 		worlds = new ArrayList<World>();
 		worlds.add(moonWorld);
 		worlds.add(xmasWorld);
@@ -56,10 +65,17 @@ public class Game extends GUI {
 		btn3.setPressed(false);
 	}
 
+	public void setScore(int score) {
+	    this.score = score;
+	}
 	@Override
 	public void update(double timeMultiplier) {
+
 		balle.update();
-		currWorld.update();
+		for(World w : worlds) {
+			w.update();
+			w.morph();
+		}
 
 		balle.isDead = currWorld.collide(balle);
 		
@@ -74,7 +90,8 @@ public class Game extends GUI {
 		currWorld.render();
 
 		balle.render();
-
+		
+		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);
 		btn1.render();
 		btn2.render();
 		btn3.render();
