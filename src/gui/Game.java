@@ -41,11 +41,12 @@ public class Game extends GUI {
 		super();
 		score = 0;
 		music = new SoundsManager();
+
 		balle = new Ball(width/4, Math.PI/2, 25);
 
 		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
 		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
-		ringWorld = new World(3, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
+		ringWorld = new World(2, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
 		worlds = new ArrayList<World>();
 		worlds.add(moonWorld);
 		worlds.add(xmasWorld);
@@ -68,8 +69,14 @@ public class Game extends GUI {
 	}
 	@Override
 	public void update(double timeMultiplier) {
-		balle.update(score);
-		currWorld.update();
+
+		balle.update();
+		for(World w : worlds) {
+			w.update();
+			w.morph();
+		}
+
+
 		balle.isDead = currWorld.collide(balle);
 	}
 
