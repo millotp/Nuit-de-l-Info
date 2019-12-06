@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
+import gui.Game;
 import util.Image;
 import util.Renderer;
 import util.VecPolar;
@@ -91,17 +92,21 @@ public class World {
 		}
 	}
 
-	public void morph(boolean victime) {
+	public void morph(boolean victime, Game game) {
 		for (Obstacle o : obstacles) {
 			if ((o.pos.a + o.size.a) % (2 * Math.PI) >= gateEndAngle
 					&& (o.pos.a + o.size.a) % (2 * Math.PI) <= gatePopAngle && !o.isMorphing) {
 				o.isPoping = false;
+
+				game.increaseScore();
+
 				o.isMorphing = true;
 				if (o.pos.r > width / 6)
 					o.morphSpeed = 1;
 				else
 					o.morphSpeed = -1;
 			}
+
 			if (o.isMorphing && o.size.r <= 0 && (o.pos.a + o.size.a) % (2 * Math.PI) >= gatePopAngle) {
 				o.isPoping = true;
 				if (!victime) {
@@ -125,6 +130,7 @@ public class World {
 						o.pos.r = 7 * width / 16;
 					}
 				}
+
 			}
 		}
 	}

@@ -31,9 +31,14 @@ public class Game extends GUI {
 	private Button btn2;
 	private Button btn3;
 
-	private SoundsManager music;
 
+	
+	private SoundsManager music;	
 	private int score;
+	private boolean boom;
+
+	
+
 
 	public Game() {
 
@@ -63,9 +68,7 @@ public class Game extends GUI {
 		btn3.setPressed(false);
 	}
 
-	public void setScore(int score) {
-		this.score = score;
-	}
+
 
 	@Override
 	public void update(double timeMultiplier) {
@@ -75,7 +78,9 @@ public class Game extends GUI {
 		for (int i = 0; i < worlds.size(); i++) {
 			World w = worlds.get(i);
 			w.update();
-			w.morph(i == victime);
+
+			w.morph(i == victime, this);
+
 		}
 
 		balle.isDead = currWorld.collide(balle);
@@ -85,7 +90,15 @@ public class Game extends GUI {
 		}
 
 	}
-
+	
+	public void increaseScore() {
+		renderScoreEffect();
+		score++;
+	}
+	public void renderScoreEffect() {
+		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);
+	}
+	
 	@Override
 	public void render() {
 		super.render();
@@ -94,7 +107,10 @@ public class Game extends GUI {
 
 		balle.render();
 
-		writeCentered(fontMenu, "Score : " + score, width / 10, height / 17, 0xffffff);
+		
+		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);		
+
+
 		btn1.render();
 		btn2.render();
 		btn3.render();
