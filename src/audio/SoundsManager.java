@@ -16,6 +16,10 @@ public class SoundsManager {
 	
 	public void addMusicEffect(String effect) {
 		try {
+			if (effect == "inox") {
+				musicEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/inox.wav"));
+				musicEffect.playAsSoundEffect(1.0f, 1.0f, false);			
+			}
 			if (effect == "explosion") {
 				musicEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/explosion.wav"));
 				musicEffect.playAsSoundEffect(1.0f, 1.0f, false);			
@@ -44,7 +48,7 @@ public class SoundsManager {
 				backgroundMusic.playAsMusic(1.0f, 1.0f, true);			
 			}
 			if (theme == "ring") {
-				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/pluie.wav"));
+				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/seigneur.wav"));
 				backgroundMusic.playAsMusic(1.0f, 1.0f, true);			
 			}
 		}

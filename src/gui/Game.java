@@ -1,7 +1,8 @@
 package gui;
 
 import static util.Global.endRequest;
-import static util.Global.height;
+import static util.Global.*;
+
 
 import java.util.ArrayList;
 
@@ -27,13 +28,22 @@ public class Game extends GUI {
 	private Button btn1;
 	private Button btn2;
 	private Button btn3;
-	private SoundsManager music;
+
+	
+	private SoundsManager music;	
+	
+	private int score;
+	
 
 	public Game() {
+
 		super();
+		score = 0;
 		music = new SoundsManager();
-		balle = new Ball(260, Math.PI , 25);
-		moonWorld = new World(2, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
+
+		balle = new Ball(width/4, Math.PI/2, 25);
+
+		moonWorld = new World(1, "meta/moon_ground.jpg", "meta/stars.jpg", "moon");
 		xmasWorld = new World(2, "meta/xmas_ground.jpg", "meta/xmas_bkg.jpg", "xmas");
 		ringWorld = new World(2, "meta/ring_ground.jpg", "meta/ring_bkg.jpg", "ring");
 		worlds = new ArrayList<World>();
