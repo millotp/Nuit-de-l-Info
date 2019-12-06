@@ -52,12 +52,12 @@ public class World {
 
 		
 		this.obstacles = new ArrayList<Obstacle>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			if (Math.random() < 0.5)
-				this.obstacles.add(new Obstacle(new VecPolar(width / 6 , (i/3.0) * Math.PI * 2),
+				this.obstacles.add(new Obstacle(new VecPolar(width / 6 , (i/4.0) * Math.PI * 2),
 						new VecPolar(width / 16,  0.1 )));
 			else
-				this.obstacles.add(new Obstacle(new VecPolar(5 * width / 16 + width / 16, (i/3.0) * Math.PI * 2),
+				this.obstacles.add(new Obstacle(new VecPolar(5 * width / 16 + width / 16, (i/4.0) * Math.PI * 2),
 						new VecPolar(width / 16,  0.1 )));
 		}
 	}
@@ -136,7 +136,6 @@ public class World {
 
 			if (o.isMorphing && o.size.r <= 0 && (o.pos.a) % (2 * Math.PI) >= gatePopAngle) {
 				o.isPoping = true;
-				System.out.println(theme + "  " + victime);
 				if (!victime) {
 					o.size.a = 0.1;
 					
