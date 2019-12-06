@@ -28,8 +28,8 @@ public class Players extends GUI {
 		this.imagePlayers[0] = new Image("meta/ball.jpg");
 		addButton((width - widthButton) / 2, height/3, widthButton, heightButton, "Jean Roch", "GAME");
 		this.imagePlayers[1] = new Image("meta/jlr.png");
-		addButton((width - widthButton) / 2 + widthButton, height/3, widthButton, heightButton, "Kiki", "GAME");
-		this.imagePlayers[2] = new Image("meta/mbappe.jpg");
+		addButton((width - widthButton) / 2 + widthButton, height/3, widthButton, heightButton, "Giroud", "GAME");
+		this.imagePlayers[2] = new Image("meta/giroud.jpg");
 
 		
 	}
@@ -63,7 +63,7 @@ public class Players extends GUI {
 				Ball.picture = "jlr.png";
 				break;
 			case 2:
-				Ball.picture = "mbappe.jpg";
+				Ball.picture = "giroud.jpg";
 				break;
 		}
 			
