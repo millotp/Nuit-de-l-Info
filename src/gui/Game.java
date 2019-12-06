@@ -32,8 +32,9 @@ public class Game extends GUI {
 
 	
 	private SoundsManager music;	
-	
 	private int score;
+	private boolean boom;
+
 	
 
 	public Game() {
@@ -64,22 +65,28 @@ public class Game extends GUI {
 		btn3.setPressed(false);
 	}
 
-	public void setScore(int score) {
-	    this.score = score;
+	
+	public void setBoom(boolean boom) {
+		this.boom = boom;
 	}
+	
 	@Override
 	public void update(double timeMultiplier) {
 
 		balle.update();
 		for(World w : worlds) {
 			w.update();
-			w.morph();
+			w.morph(this);
 		}
 
 
 		balle.isDead = currWorld.collide(balle);
 	}
-
+	
+	public void renderScoreEffect() {
+		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);
+	}
+	
 	@Override
 	public void render() {
 		super.render();
@@ -88,7 +95,12 @@ public class Game extends GUI {
 
 		balle.render();
 		
-		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);
+		if (boom == true) {
+			score++;
+			renderScoreEffect();
+			boom = false;
+		}
+		writeCentered(fontMenu, "Score : " + score, width / 10, height/17, 0xffffff);		
 		btn1.render();
 		btn2.render();
 		btn3.render();

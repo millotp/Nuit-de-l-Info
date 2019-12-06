@@ -40,16 +40,28 @@ public class SoundsManager {
 	public void changeMusicTheme(String theme) {
 		try {
 			if (theme == "moon") {
+				if (backgroundMusic != null) {
+					backgroundMusic.stop();
+				}
 				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/espace.wav"));
 				backgroundMusic.playAsMusic(1.0f, 1.0f, true);				
 			}
 			if (theme == "xmas") {
+				if (backgroundMusic != null) {
+					backgroundMusic.stop();
+				}
 				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/noel.wav"));
-				backgroundMusic.playAsMusic(1.0f, 1.0f, true);			
+				backgroundMusic.playAsMusic(1.0f, 1.0f, true);	
+				
+				
 			}
 			if (theme == "ring") {
+				if (backgroundMusic != null) {
+					backgroundMusic.stop();
+				}
 				backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("sounds/seigneur.wav"));
-				backgroundMusic.playAsMusic(1.0f, 1.0f, true);			
+				backgroundMusic.playAsMusic(1.0f, 1.0f, true);		
+
 			}
 		}
 		catch (Exception e){

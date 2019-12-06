@@ -4,6 +4,9 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 import static util.Global.*;
+import static util.Renderer.fontMenu;
+import static util.Renderer.writeCentered;
+
 import org.lwjgl.opengl.GL11;
 
 import util.Image;
@@ -17,13 +20,12 @@ public class Ball {
 	public double radius;
 	private Image texture;
 	public boolean isDead;
-	private int nbLap;
+
 
 	public Ball(double r, double a, double radius) {
 		pos = new VecPolar(r, a);
 		speed = new VecPolar(3, 0);
 		this.radius = radius;
-		nbLap = 0;
 		this.texture = new Image("meta/ball.jpg");
 	}
 
@@ -39,9 +41,10 @@ public class Ball {
 		Renderer.ellipse(pos.r * cos(pos.a), pos.r * sin(pos.a), 2 * this.radius, 2 * this.radius, 0.5);
 		this.texture.unbind();
 		GL11.glPopMatrix();
+
 	}
 
-	public void update(int score) {
+	public void update() {
 		if (this.pos.r - this.radius < width/6 || this.pos.r + this.radius > 7*width/16){
 			this.speed.r *= -1;
 		}

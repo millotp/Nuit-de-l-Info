@@ -15,8 +15,10 @@ public class Obstacle {
 	
 	boolean isMorphing;
 	double morphSpeed;
+	boolean scored;
 
 	public Obstacle(VecPolar pos, VecPolar size) {
+		scored = false;
 		this.pos = pos;
 		this.size = size;
 	}
