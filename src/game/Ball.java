@@ -23,7 +23,7 @@ public class Ball {
 
 	public Ball(double r, double a, double radius) {
 		pos = new VecPolar(r, a);
-		speed = new VecPolar(0, 0);
+		speed = new VecPolar(1, 0);
 		this.radius = radius;
 
 		this.texture = new Image("meta/" + picture);
@@ -31,11 +31,8 @@ public class Ball {
 	}
 
 	public void render() {
-
 		GL11.glPushMatrix();
-
 		GL11.glTranslated(width / 2, height / 2, 0);
-
 		this.texture.bind();
 		if (isDead)
 			GL11.glColor3d(1, 0, 0);
@@ -45,12 +42,17 @@ public class Ball {
 
 	}
 
-	public void update() {
-		if (this.pos.r - this.radius < width / 6 || this.pos.r + this.radius > 7 * width / 16) {
-			this.speed.r *= -1;
+	public void update(boolean booster) {
+//		if (this.pos.r - this.radius < width / 6 || this.pos.r + this.radius > 7 * width / 16) {
+//			this.speed.r *= -1;
+//		}
+//		this.pos.r += this.speed.r;
+		if (booster) {
+			this.pos.r += this.speed.r;
 		}
-		this.pos.r += this.speed.r;
-
+		else {
+			this.pos.r += -this.speed.r;
+		}
 	}
 
 }

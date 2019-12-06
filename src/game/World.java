@@ -25,6 +25,8 @@ public class World {
 	private static double gatePopAngle = 3.2 * Math.PI / 4;
 
 	private ArrayList<Obstacle> obstacles;
+	private ArrayList<Booster> boosters;
+	private boolean curBooster;
 
 	public World(double rotationSpeed, String groundTexture, String bkgTxt, String theme) {
 
@@ -34,20 +36,38 @@ public class World {
 		this.ceilTexture = new Image(groundTexture);
 		this.theme = theme;
 		this.angle = 0;
+		this.boosters = new ArrayList<Booster>();
+		if (theme == "moon") {
+			boosters.add(new Booster(0, Math.PI, false));
+			boosters.add(new Booster(Math.PI, 2*Math.PI, true));			
+		}
+		else if (theme == "xmas") {
+			boosters.add(new Booster(0, Math.PI, true));
+			boosters.add(new Booster(Math.PI, 2*Math.PI, false));					
+		}
+		else {
+			boosters.add(new Booster(0, Math.PI, true));
+			boosters.add(new Booster(Math.PI, 2*Math.PI, false));				
+		}
 
+		
 		this.obstacles = new ArrayList<Obstacle>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (Math.random() < 0.5)
-				this.obstacles.add(new Obstacle(new VecPolar(width / 6 , (i / 5.0) * Math.PI * 2),
+				this.obstacles.add(new Obstacle(new VecPolar(width / 6 , (i/3.0) * Math.PI * 2),
 						new VecPolar(width / 16,  0.1 )));
 			else
-				this.obstacles.add(new Obstacle(new VecPolar(5 * width / 16 + width / 16, (i / 5.0) * Math.PI * 2),
+				this.obstacles.add(new Obstacle(new VecPolar(5 * width / 16 + width / 16, (i/3.0) * Math.PI * 2),
 						new VecPolar(width / 16,  0.1 )));
 		}
 	}
 
 	public String getTheme() {
 		return theme;
+	}
+	
+	public boolean getCurBooster() {
+		return curBooster;
 	}
 
 	public void render() {
@@ -86,6 +106,13 @@ public class World {
 	}
 
 	public void update() {
+		if (angle%(2*Math.PI) < Math.PI) {
+			curBooster = boosters.get(0).getBoost();
+		}
+		else {
+			curBooster = boosters.get(1).getBoost();
+		}
+	
 		angle += 0.1 * this.rotationSpeed;
 		for (Obstacle o : this.obstacles) {
 			o.update(0.1 * this.rotationSpeed);

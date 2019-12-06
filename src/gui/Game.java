@@ -77,27 +77,22 @@ public class Game extends GUI {
 
 	@Override
 	public void update(double timeMultiplier) {
-
-		balle.update();
+		
 		if (gateCrossed >= worlds.size()) {
 		   victime = (int) (Math.random() * worlds.size());
 		   gateCrossed = 0;
 		}
-		
-
 		for (int i = 0; i < worlds.size(); i++) {
 			World w = worlds.get(i);
 			w.update();
+			
 
 			if (w.morph(i == victime, this)) {
 				gateCrossed++;
 			}
-				
-
 		}
-
+		balle.update(currWorld.getCurBooster());
 		balle.isDead = currWorld.collide(balle);
-
 		if (balle.isDead) {
 			 Main.theMain.changeGUI("DEATH");
 		}
