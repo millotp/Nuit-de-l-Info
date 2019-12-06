@@ -3,6 +3,7 @@ package game;
 import static java.lang.Math.*;
 import static java.lang.Math.sin;
 import static util.Global.map;
+import static util.Renderer.*;
 
 import org.lwjgl.opengl.GL11;
 
@@ -12,30 +13,49 @@ import util.VecPolar;
 public class Obstacle {
 	VecPolar pos;
 	VecPolar size;
-	
+	double goalSize;
+
 	boolean isMorphing;
+	boolean isPoping;
 	double morphSpeed;
+	
+	int color;
 
 	public Obstacle(VecPolar pos, VecPolar size) {
 		this.pos = pos;
 		this.size = size;
+		this.color = (int)(Math.random() * 0xFFFFFF) << 8 | 0xFF;
 	}
 
 	public void update(double speed) {
 		pos.a += speed * Math.PI / 180;
-		if(isMorphing && size.r > 0) {
-			if(morphSpeed < 0 ) {
-				size.r += morphSpeed;
+		if (isMorphing) {
+			if (isPoping && size.r < goalSize) {
+				if (morphSpeed > 0) {
+					size.r += morphSpeed;
+				}
+				if (morphSpeed < 0) {
+					pos.r += morphSpeed;
+					size.r -= morphSpeed;
+				}
+				
+				if(size.r >= goalSize)
+					isMorphing = false;
 			}
-			if(morphSpeed > 0) {
-				pos.r += morphSpeed;
-				size.r -= morphSpeed;
+			if (!isPoping && size.r > 0) {
+				if (morphSpeed < 0) {
+					size.r += morphSpeed;
+				}
+				if (morphSpeed > 0) {
+					pos.r += morphSpeed;
+					size.r -= morphSpeed;
+				}
 			}
 		}
 	}
 
 	public void render() {
-		GL11.glColor3d(1, 0, 0);
+		setColor(color);
 		Renderer.setMode(GL11.GL_FILL);
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
 		for (int i = 0; i < 20; i++) {
@@ -49,10 +69,12 @@ public class Obstacle {
 	}
 
 	public boolean collideWith(Ball ball) {
-		if(ball.pos.r - ball.radius > pos.r + size.r || ball.pos.r + ball.radius < pos.r)
+		if (ball.pos.r - ball.radius > pos.r + size.r || ball.pos.r + ball.radius < pos.r)
 			return false;
 		double half_angle = atan(ball.radius / ball.pos.r);
-		if(ball.pos.a + half_angle < pos.a || ball.pos.a - half_angle > pos.a + size.a)
+
+		if (ball.pos.a + half_angle < pos.a % (2 * Math.PI)
+				|| ball.pos.a - half_angle > (pos.a + size.a) % (2 * Math.PI))
 			return false;
 		return true;
 	}
