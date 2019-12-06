@@ -11,6 +11,7 @@ import org.lwjgl.input.Keyboard;
 import audio.SoundsManager;
 import game.Ball;
 import game.World;
+import main.Main;
 
 public class Game extends GUI {
 
@@ -61,6 +62,8 @@ public class Game extends GUI {
 		currWorld.update();
 
 		balle.isDead = currWorld.collide(balle);
+		
+		if (balle.isDead){Main.theMain.changeGUI("DEATH");}
 
 	}
 
